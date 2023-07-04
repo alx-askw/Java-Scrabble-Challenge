@@ -1,6 +1,6 @@
-import java.sql.Array;
+import java.util.Arrays;
 import  java.util.HashMap;
-import java.util.Map;
+
 
 public class Scrabble {
 
@@ -11,11 +11,18 @@ public class Scrabble {
     public Scrabble(String args){
         this.word = args;
         this.scoreFigure = 0;
-        this.wordArray = word.split("");
+        this.wordArray = strToArray(this.word);
     }
 
+    private String[] strToArray(String word){
+        try {
+            return this.wordArray = word.split("");
+        } catch (NullPointerException e) {
+            return this.wordArray = new String[]{""};
+        }
+    }
 
-    public Integer scoreValue(String letter) {
+    public int scoreValue(String letter) {
         HashMap<String, Integer> scoreMap = new HashMap<String, Integer>();
         scoreMap.put("A", 1);
         scoreMap.put("E", 1);
@@ -43,14 +50,14 @@ public class Scrabble {
         scoreMap.put("X", 8);
         scoreMap.put("Q", 10);
         scoreMap.put("Z", 10);
-        return scoreMap.get(letter);
+        return scoreMap.getOrDefault(letter, 0);
     }
 
     private int scoreCalculator(){
         for(int i = 0; i < wordArray.length; i++){
-            scoreFigure += scoreValue(wordArray[i]);
+            this.scoreFigure += scoreValue(wordArray[i]);
         }
-        return scoreFigure;
+        return this.scoreFigure;
     }
 
 //    private void stringToArray(){
@@ -60,9 +67,20 @@ public class Scrabble {
 //    }
 
     public int score(){
+        if(this.wordArray[0].equals("")){
+            return 0;
+        }
         return scoreCalculator();
     }
 
+    public void printArray(){
+        System.out.println(Arrays.toString(this.wordArray));
+    }
+
     public static void main(String[] args) {
+        Scrabble testing = new Scrabble("a");
+        testing.printArray();
+        testing.score();
+        System.out.println(testing.score());
     }
 }

@@ -18,14 +18,13 @@ public class ScrabbleTest {
         Scrabble scrabble = new Scrabble(null);
         assertEquals(scrabble.score(), 0);
     }
-//
-//    @Test
-//    @Disabled
-//    public void returnsScoreForShortWord1() {
-//        Scrabble scrabble = new Scrabble("a");
-//        assertEquals(scrabble.score(), 1);
-//    }
-//
+
+    @Test
+    public void returnsScoreForShortWord1() {
+        Scrabble scrabble = new Scrabble("a");
+        assertEquals(scrabble.score(), 1);
+    }
+
 //    @Test
 //    @Disabled
 //    public void returnsScoreForShortWord2() {
