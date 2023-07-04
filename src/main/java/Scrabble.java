@@ -2,6 +2,7 @@ import java.util.Arrays;
 import  java.util.HashMap;
 
 
+
 public class Scrabble {
 
     private String word;
@@ -9,17 +10,22 @@ public class Scrabble {
     private String[] wordArray;
 
     public Scrabble(String args){
-        this.word = args;
+        if(args != null){
+            this.word = args.toUpperCase();
+            this.wordArray = strToArray(this.word);
+        }
+        if(args == null){
+            this.wordArray = new String[]{""};
+        }
         this.scoreFigure = 0;
-        this.wordArray = strToArray(this.word);
+
     }
 
     private String[] strToArray(String word){
-        try {
-            return this.wordArray = word.split("");
-        } catch (NullPointerException e) {
-            return this.wordArray = new String[]{""};
-        }
+        if(word != null){
+            return word.split("");
+            }
+        return new String[] {""};
     }
 
     public int scoreValue(String letter) {
@@ -51,6 +57,7 @@ public class Scrabble {
         scoreMap.put("Q", 10);
         scoreMap.put("Z", 10);
         return scoreMap.getOrDefault(letter, 0);
+        //return scoreMap.get(letter);
     }
 
     private int scoreCalculator(){
@@ -60,14 +67,8 @@ public class Scrabble {
         return this.scoreFigure;
     }
 
-//    private void stringToArray(){
-//        for(int i = 0; i < wordArray.length; i++){
-//            wordArray[i] = scoreValue("a");
-//        }
-//    }
-
     public int score(){
-        if(this.wordArray[0].equals("")){
+        if(this.wordArray.length < 1){
             return 0;
         }
         return scoreCalculator();

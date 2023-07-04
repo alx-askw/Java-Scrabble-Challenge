@@ -25,12 +25,11 @@ public class ScrabbleTest {
         assertEquals(scrabble.score(), 1);
     }
 
-//    @Test
-//    @Disabled
-//    public void returnsScoreForShortWord2() {
-//        Scrabble scrabble = new Scrabble("f");
-//        assertEquals(scrabble.score(), 4);
-//    }
+    @Test
+    public void returnsScoreForShortWord2() {
+        Scrabble scrabble = new Scrabble("f");
+        assertEquals(scrabble.score(), 4);
+    }
 //
 //    @Test
 //    @Disabled
