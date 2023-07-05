@@ -8,7 +8,11 @@ public class Scrabble {
     private String word;
     int scoreFigure;
     private String[] wordArray;
+    private boolean isDoubleWord; //primitive default = false
+    private boolean isTripleWord;
+    private int wordMultiplier;
 
+    //I don't really like these conditionals in the constructor
     public Scrabble(String args){
         if(args != null){
             this.word = args.toUpperCase();
@@ -18,7 +22,26 @@ public class Scrabble {
             this.wordArray = new String[]{""};
         }
         this.scoreFigure = 0;
+        this.wordMultiplier = 1;
+    }
 
+    //Extended test 1 - 2 constructor
+    public Scrabble(String args, Character[] char1, Character[] char2, boolean isDouble, boolean isTriple){
+        if(args != null){
+            this.word = args.toUpperCase();
+            this.wordArray = strToArray(this.word);
+        }
+        if(args == null){
+            this.wordArray = new String[]{""};
+        }
+        this.scoreFigure = 0;
+        this.isDoubleWord = isDouble;
+        this.isTripleWord = isTriple;
+        this.wordMultiplier = wordMulti();
+    }
+
+    private int wordMulti() {
+        return (this.isDoubleWord && !this.isTripleWord) ? 2 : 3;
     }
 
     private String[] strToArray(String word){
@@ -28,8 +51,9 @@ public class Scrabble {
         return new String[] {""};
     }
 
+    //only function (not including constructors) that's over 5 lines (out of necessity)
     public int scoreValue(String letter) {
-        HashMap<String, Integer> scoreMap = new HashMap<String, Integer>();
+        HashMap<String, Integer> scoreMap = new HashMap<>();
         scoreMap.put("A", 1);
         scoreMap.put("E", 1);
         scoreMap.put("I", 1);
@@ -56,9 +80,20 @@ public class Scrabble {
         scoreMap.put("X", 8);
         scoreMap.put("Q", 10);
         scoreMap.put("Z", 10);
-        return scoreMap.getOrDefault(letter, 0);
-        //return scoreMap.get(letter);
+        return scoreMap.getOrDefault(letter, 0); //avoid an exception here?
     }
+
+
+//    private int wordMultiplier(int score){
+//        if()
+//    }
+
+//    private int multiplierHandler(int score){
+//        if (this.isTripleWord || this.isDoubleWord) {
+//            return wordMultiplier(score);
+//        }
+//    }
+
 
     private int scoreCalculator(){
         for(int i = 0; i < wordArray.length; i++){
@@ -71,7 +106,8 @@ public class Scrabble {
         if(this.wordArray.length < 1){
             return 0;
         }
-        return scoreCalculator();
+        //return scoreCalculator();
+        return (scoreCalculator()*this.wordMultiplier);
     }
 
     public void printArray(){
