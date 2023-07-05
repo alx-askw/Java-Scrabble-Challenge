@@ -10,6 +10,8 @@ public class Scrabble {
     private String[] wordArray;
     private boolean isDoubleWord; //primitive default = false
     private boolean isTripleWord;
+    private Character[] doubleLetters;
+    private Character[] tripleLetters;
     private int wordMultiplier;
 
     //I don't really like these conditionals in the constructor
@@ -38,7 +40,10 @@ public class Scrabble {
         this.isDoubleWord = isDouble;
         this.isTripleWord = isTriple;
         this.wordMultiplier = wordMulti();
+        this.doubleLetters = char1;
+        this.tripleLetters = char2;
     }
+
 
     private int wordMulti() {
         return (this.isDoubleWord && !this.isTripleWord) ? 2 : 3;
@@ -49,6 +54,13 @@ public class Scrabble {
             return word.split("");
             }
         return new String[] {""};
+    }
+
+    private Character[] charArrayIsNull(Character[] args){
+        if (args != null){
+            return args;
+        }
+        return new Character['0'];
     }
 
     //only function (not including constructors) that's over 5 lines (out of necessity)
@@ -95,6 +107,14 @@ public class Scrabble {
 //    }
 
 
+    private int letterDoubler() {
+        int returnValue = 0;
+        for (int i = 0; this.doubleLetters.length > 0 && i < this.doubleLetters.length; i++) {
+            System.out.println(scoreValue(doubleLetters[i].toString()));
+        }
+        return returnValue;
+    }
+
     private int scoreCalculator(){
         for(int i = 0; i < wordArray.length; i++){
             this.scoreFigure += scoreValue(wordArray[i]);
@@ -107,7 +127,7 @@ public class Scrabble {
             return 0;
         }
         //return scoreCalculator();
-        return (scoreCalculator()*this.wordMultiplier);
+        return ((scoreCalculator() + letterDoubler())*this.wordMultiplier);
     }
 
     public void printArray(){
