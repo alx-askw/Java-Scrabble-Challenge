@@ -1,10 +1,8 @@
-import java.util.Arrays;
 import  java.util.HashMap;
-
-
 
 public class Scrabble {
 
+    //dislike the amount of properties / could some be static?
     private String word;
     int scoreFigure;
     private String[] wordArray;
@@ -12,7 +10,7 @@ public class Scrabble {
     private boolean isTripleWord;
     private Character[] doubleLetters;
     private Character[] tripleLetters;
-    private int wordMultiplier;
+    private int wordMultiplier; //this is to cut down on lines in methods
 
     //I don't really like these conditionals in the constructor
     public Scrabble(String args){
@@ -25,12 +23,12 @@ public class Scrabble {
         }
         this.scoreFigure = 0;
         this.wordMultiplier = 1;
-        this.doubleLetters = new Character[0];
-        this.tripleLetters = new Character[0];
+        this.doubleLetters = new Character[0]; //need to default these to something due to how score is worked out in
+        this.tripleLetters = new Character[0]; //less than 5 lines
 
     }
 
-    //Extended test 1 - 2 constructor
+    //Extended test 1 - 2 constructor (both are over 5 lines but not methods per se)
     public Scrabble(String args, Character[] char1, Character[] char2, boolean isDouble, boolean isTriple){
         if(args != null){
             this.word = args.toUpperCase();
@@ -70,6 +68,7 @@ public class Scrabble {
     }
 
     //only function (not including constructors) that's over 5 lines (out of necessity)
+    //notes for later me + reader - could these have been done elsewhere/better approach
     public int scoreValue(String letter) {
         HashMap<String, Integer> scoreMap = new HashMap<>();
         scoreMap.put("A", 1);
@@ -103,16 +102,17 @@ public class Scrabble {
 
     private int letterDoubler() {
         int returnValue = 0;
-        for (int i = 0; this.doubleLetters.length > i && i < this.doubleLetters.length; i++) {
+        for (int i = 0; i < this.doubleLetters.length; i++) {
             returnValue += scoreValue(doubleLetters[i].toString());
         }
         return returnValue;
     }
-        private int letterTripler() {
-            int returnValue = 0;
-            for (int i = 0; this.tripleLetters.length > i && i < this.tripleLetters.length; i++) {
-                returnValue += scoreValue(tripleLetters[i].toString());
-            }
+    //these two could probably been mashed together - on the tip of my mind but can't quite figure it out
+    private int letterTripler() {
+        int returnValue = 0;
+        for (int i = 0; i < this.tripleLetters.length; i++) {
+            returnValue += scoreValue(tripleLetters[i].toString());
+        }
         return returnValue*2;
     }
 
@@ -128,16 +128,5 @@ public class Scrabble {
             return 0;
         }
         return ((scoreCalculator() + letterDoubler() + letterTripler())*this.wordMultiplier);
-    }
-
-    public void printArray(){
-        System.out.println(Arrays.toString(this.wordArray));
-    }
-
-    public static void main(String[] args) {
-        Scrabble testing = new Scrabble("a");
-        testing.printArray();
-        testing.score();
-        System.out.println(testing.score());
     }
 }
