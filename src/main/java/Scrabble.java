@@ -104,10 +104,16 @@ public class Scrabble {
     private int letterDoubler() {
         int returnValue = 0;
         for (int i = 0; this.doubleLetters.length > i && i < this.doubleLetters.length; i++) {
-            //System.out.println(scoreValue(doubleLetters[i].toString()));
             returnValue += scoreValue(doubleLetters[i].toString());
         }
         return returnValue;
+    }
+        private int letterTripler() {
+            int returnValue = 0;
+            for (int i = 0; this.tripleLetters.length > i && i < this.tripleLetters.length; i++) {
+                returnValue += scoreValue(tripleLetters[i].toString());
+            }
+        return returnValue*2;
     }
 
     private int scoreCalculator(){
@@ -121,7 +127,7 @@ public class Scrabble {
         if(this.wordArray.length < 1){
             return 0;
         }
-        return ((scoreCalculator() + letterDoubler())*this.wordMultiplier);
+        return ((scoreCalculator() + letterDoubler() + letterTripler())*this.wordMultiplier);
     }
 
     public void printArray(){
