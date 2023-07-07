@@ -25,6 +25,9 @@ public class Scrabble {
         }
         this.scoreFigure = 0;
         this.wordMultiplier = 1;
+        this.doubleLetters = new Character[0];
+        this.tripleLetters = new Character[0];
+
     }
 
     //Extended test 1 - 2 constructor
@@ -40,13 +43,16 @@ public class Scrabble {
         this.isDoubleWord = isDouble;
         this.isTripleWord = isTriple;
         this.wordMultiplier = wordMulti();
-        this.doubleLetters = char1;
+        this.doubleLetters = charArrayIsNull(char1);
         this.tripleLetters = char2;
     }
 
 
     private int wordMulti() {
-        return (this.isDoubleWord && !this.isTripleWord) ? 2 : 3;
+        if (this.isDoubleWord || this.isTripleWord) {
+            return (this.isDoubleWord && !this.isTripleWord) ? 2 : 3;
+        }
+        return 1;
     }
 
     private String[] strToArray(String word){
@@ -60,7 +66,7 @@ public class Scrabble {
         if (args != null){
             return args;
         }
-        return new Character['0'];
+        return new Character[1];
     }
 
     //only function (not including constructors) that's over 5 lines (out of necessity)
@@ -95,22 +101,11 @@ public class Scrabble {
         return scoreMap.getOrDefault(letter, 0); //avoid an exception here?
     }
 
-
-//    private int wordMultiplier(int score){
-//        if()
-//    }
-
-//    private int multiplierHandler(int score){
-//        if (this.isTripleWord || this.isDoubleWord) {
-//            return wordMultiplier(score);
-//        }
-//    }
-
-
     private int letterDoubler() {
         int returnValue = 0;
-        for (int i = 0; this.doubleLetters.length > 0 && i < this.doubleLetters.length; i++) {
-            System.out.println(scoreValue(doubleLetters[i].toString()));
+        for (int i = 0; this.doubleLetters.length > i && i < this.doubleLetters.length; i++) {
+            //System.out.println(scoreValue(doubleLetters[i].toString()));
+            returnValue += scoreValue(doubleLetters[i].toString());
         }
         return returnValue;
     }
@@ -126,7 +121,6 @@ public class Scrabble {
         if(this.wordArray.length < 1){
             return 0;
         }
-        //return scoreCalculator();
         return ((scoreCalculator() + letterDoubler())*this.wordMultiplier);
     }
 
